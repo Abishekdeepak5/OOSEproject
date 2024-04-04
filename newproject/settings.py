@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'newapp',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'train'
 ]
 
 MIDDLEWARE = [
