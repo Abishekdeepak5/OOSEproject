@@ -49,16 +49,32 @@
             <h1>Book Ticket</h1>
     <form action="" class="">
         <label for="from" class="form-group">From</label>
-        <input type="text" id="from" name="from" class="form-control">
+        {% comment %} <input type="text" id="from" name="from" class="form-control"> {% endcomment %}
+        <select name="from" id="from" class="form-control">
+          {% for train in trains %}
+            <option value="{{train.from_location}}">{{train.from_location}}</option>
+          {% endfor %}
+        </select>
 
         <label for="to" class="form-group">To</label>
-        <input type="text" id="to" name="to" class="form-control">
+        <select name="to" id="to" class="form-control">
+          {% for train in trains %}
+            <option value="{{train.to_location}}">{{train.to_location}}</option>
+          {% endfor %}
+        </select>
 
         <label for="date" class="form-group">Date</label>
         <input type="date" id="date" class="form-control">
 
-        <label for="allclass" class="form-group">Class</label>
-        <input type="text" id="allclass" name="allclass" class="form-control">
+        <label for="allclass" class="form-group">General</label>
+          <select name="allclass" id="allclass" class="form-control" >
+            <option value="general">GENERAL</option>
+            <option value="ladies">LADIES</option>
+            <option value="disability">PERSON WITH DISABILITY</option>
+            <option value="tatkal">TATKAL</option>
+          </select>
+
+        {% comment %} <input type="text" id="allclass" name="allclass" class="form-control"> {% endcomment %}
 
         <label for="seat" class="form-group">Seat Type</label>
         <input type="text" id="seat" name="seat" class="form-control">
@@ -70,8 +86,12 @@
 </div>
 </div>
     {% if user %}
-    <h1>Welcome {{user.username}}</h1>
+    <h1> {{user.username}}</h1>
     {% endif%}
+    {% for train in trains %}
+    <h1>{{train.from_location}}</h1>
+    <h1>{{train.to_location}}</h1>
+    {% endfor %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

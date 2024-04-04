@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Userdetail
+from train.models import *
 # Create your views here.
 
 def home(request):
     # return HttpResponse('<h1>Hello world</h1><h5>Hello world</h5>')
-    return render(request,'home.html')
+    # trainobj=Train()
+    data=Route.objects.all()
+    return render(request,'home.html',{'trains':data})
 def register(request):
     if request.method=='POST':
         ob=Userdetail()

@@ -13,10 +13,10 @@ class Station(models.Model):
 
 class Route(models.Model):
     route_no=models.BigAutoField(primary_key=True)
-    train_no=models.ForeignKey(Train)
+    train_no=models.ForeignKey(Train,on_delete=models.CASCADE)
     from_location=models.CharField(max_length=30)
     to_location=models.CharField(max_length=30)
     arrival_time=models.TimeField()
     departure_time=models.TimeField()
-    station_id=models.ForeignKey(Station)
+    station_id=models.ForeignKey(Station,on_delete=models.CASCADE)
 
