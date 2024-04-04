@@ -3,12 +3,24 @@ from django.http import HttpResponse
 from .models import Userdetail
 from train.models import *
 # Create your views here.
-
+class TrainAvailable:
+    from_loc=""
+    to_loc=""
+    train_name=""
 def home(request):
-    # return HttpResponse('<h1>Hello world</h1><h5>Hello world</h5>')
-    # trainobj=Train()
     data=Route.objects.all()
-    return render(request,'home.html',{'trains':data})
+    place=Place.objects.all()
+    dict_data={'places':place}
+    if request.method=='POST':
+        from_loc=request.POST['from']
+        to_loc=request.POST['to']
+        if from_loc==to_loc:
+            dict_data['same_loc']=True
+            return render(request,'home.html',dict_data)
+        train_data={}
+        train_data['train_available']=Route.objects.filter(from_location=from_loc,to_location=to_loc)
+        return render(request,'train.html',train_data)
+    return render(request,'home.html',dict_data)
 def register(request):
     if request.method=='POST':
         ob=Userdetail()

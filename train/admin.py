@@ -4,5 +4,7 @@ from .models import *
 admin.site.register(Train)
 admin.site.register(Station)
 admin.site.register(Route)
+admin.site.register(Place)
+
 
 
