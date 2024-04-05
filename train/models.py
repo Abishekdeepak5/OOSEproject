@@ -1,5 +1,5 @@
 from django.db import models
-
+from newapp.models import *
 # Create your models here.
 class Train(models.Model):
     train_no=models.BigAutoField(primary_key=True)
@@ -24,3 +24,29 @@ class Route(models.Model):
     arrival_time=models.TimeField()
     departure_time=models.TimeField()
     station_id=models.ForeignKey(Station,on_delete=models.CASCADE)
+    duration=models.TimeField()
+
+class ClassType(models.Model):
+    class_type_id=models.BigAutoField(primary_key=True)
+    class_name=models.CharField(max_length=30)
+
+class TrainClass(models.Model):
+    class_id=models.BigAutoField(primary_key=True)
+    train_id=models.ForeignKey(Train,on_delete=models.CASCADE)
+    class_id=models.ForeignKey(ClassType,on_delete=models.CASCADE)
+    seat_start_range=models.IntegerField()
+    seat_end_range=models.IntegerField()
+
+class Seat(models.Model):
+    seat_id=models.BigAutoField(primary_key=True)
+    train_id=models.ForeignKey(Train,on_delete=models.CASCADE)
+    seat_type=models.ForeignKey(TrainClass,on_delete=models.CASCADE)
+    seat_number=models.IntegerField()
+
+class Booking(models.Model):
+    book_id=models.BigAutoField(primary_key=True)
+    train_id=models.ForeignKey(Train,on_delete=models.CASCADE)
+    seat_no=models.ForeignKey(Seat,on_delete=models.CASCADE)
+    route_id=models.ForeignKey(Route,on_delete=models.CASCADE)
+    user_id=models.ForeignKey(Userdetail,on_delete=models.CASCADE)
+    date_of_journey=models.DateField()
