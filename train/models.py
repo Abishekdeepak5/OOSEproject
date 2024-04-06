@@ -33,7 +33,8 @@ class ClassType(models.Model):
 class TrainClass(models.Model):
     class_id=models.BigAutoField(primary_key=True)
     train_id=models.ForeignKey(Train,on_delete=models.CASCADE)
-    class_id=models.ForeignKey(ClassType,on_delete=models.CASCADE)
+    class_no=models.ForeignKey(ClassType,on_delete=models.CASCADE)
+    price=models.IntegerField(default=250)
     seat_start_range=models.IntegerField()
     seat_end_range=models.IntegerField()
 
@@ -46,7 +47,9 @@ class Seat(models.Model):
 class Booking(models.Model):
     book_id=models.BigAutoField(primary_key=True)
     train_id=models.ForeignKey(Train,on_delete=models.CASCADE)
-    seat_no=models.ForeignKey(Seat,on_delete=models.CASCADE)
+    # seat_no=models.ForeignKey(Seat,on_delete=models.CASCADE)
+    seat_no=models.IntegerField()
     route_id=models.ForeignKey(Route,on_delete=models.CASCADE)
     user_id=models.ForeignKey(Userdetail,on_delete=models.CASCADE)
-    date_of_journey=models.DateField()
+    date_of_journey=models.DateField(null=True)
+    class_no=models.ForeignKey(TrainClass,on_delete=models.CASCADE)
