@@ -72,6 +72,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'date_filter': 'newproject.templatetags.date_filters',  # Specify the path to your custom_filters module
+            },
         },
     },
 ]

@@ -23,6 +23,7 @@ from apiapp import views
 
 urlpatterns = [
     path('',include('newapp.urls')),
+    path('train/',include('train.urls')),
     path('admin/', admin.site.urls),
     url("user/",views.UserApi.as_view())
 ]

@@ -30,8 +30,6 @@ def home(request):
             train_data['train_available']=Route.objects.filter(from_location=from_loc,to_location=to_loc)
         except:
             pass
-        # train_data['Date']=date
-        # print(date)
         return render(request,'train.html',train_data)
     return render(request,'home.html',dict_data)
 def register(request):

@@ -1,6 +1,7 @@
 body{
     background-image: url('../images/Train.jpg');
     background-size: cover;
+    background-repeat:no-repeat ;
 }
 .contain{
     width:100px;
