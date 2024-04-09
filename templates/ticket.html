@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style/ticket.css' %}">
+</head>
+<body>
+<div  id="pdfContainer" onclick="downloadPDF()">
+    <div class="main-content">
+        <div class="ticket">
+            <div class="ticket__main">
+                <div class="header">Kumbakonam super Express</div>
+                <div class="info passenger">
+                    <div class="info__item">Passenger</div>
+                    <div class="info__detail">Hermione J. Granger</div>
+                </div>
+                <div class="info platform"> <span>Ticket </span><span>NO:</span>
+                    
+                    <div class="number">
+                        <div>9</div>
+                    </div>
+                </div>
+                <div class="info departure">
+                    <div class="info__item">From:</div>
+                    <div class="info__detail">King's Cross</div>
+                </div>
+                <div class="info arrival">
+                    <div class="info__item">To:</div>
+                    <div class="info__detail">Hogsmeade</div>
+                </div>
+                <div class="info date">
+                    <div class="info__item">Date</div>
+                    <div class="info__detail">1 Sep 2018</div>
+                </div>
+                <div class="info time">
+                    <div class="info__item">Time</div>
+                    <div class="info__detail">11:00AM</div>
+                </div>
+                <div class="info carriage">
+                    <div class="info__item">car</div>
+                    <div class="info__detail">4</div>
+                </div>
+                <div class="info seat">
+                    <div class="info__item">Seat</div>
+                    <div class="info__detail">6B</div>
+                </div>
+                <div class="fineprint">
+                    <p>Boarding begins 30 minutes before departure. Snacks available for purchase from The Honeydukes Express.</p>
+                    <p>This ticket is Non-refundable • Indian Railway Authority</p>
+                </div>
+        </div>
+    </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.0/html2pdf.bundle.min.js"></script>
+<script>
+    function downloadPDF() {
+         window.jsPDF = window.jspdf.jsPDF;
+         const doc = new jsPDF();
+         const pdfContainer = document.getElementById('pdfContainer');
+         const options = {
+             html2canvas: {
+                 scale: 2 
+             },
+             callback: function (pdf) {
+                 doc.save('download.pdf');
+             }
+         };
+         html2pdf().from(pdfContainer).set(options).save();
+     }
+</script> 
+</body>
+</html>

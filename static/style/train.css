@@ -12,6 +12,9 @@ body{
     font-size: larger;
     font-weight: bold;
 }
+.journeydate{
+    width: fit-content;
+}
 .trainbox{
     font-size:medium ;
     font-weight: bold;

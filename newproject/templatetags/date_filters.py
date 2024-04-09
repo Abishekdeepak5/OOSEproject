@@ -49,7 +49,9 @@ def multiple_args_tag(date_value, time_value, add_time):
         datetime_obj = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
         time_delta = datetime.strptime(str(add_time), '%H:%M:%S').time()
         result_datetime = datetime_obj + timedelta(hours=time_delta.hour, minutes=time_delta.minute, seconds=time_delta.second)
-        return result_datetime.strftime('%Y-%m-%d')
+        # return result_datetime.strftime('%Y-%m-%d')
+        return result_datetime.strftime('%a, %d %b')
+
     except:
         return ''
 

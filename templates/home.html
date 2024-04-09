@@ -45,7 +45,7 @@
         <div class="col-md-6 border border-primary rounded p-3 bg-light text-primary">
             <h1 class="text-center">Book Ticket</h1>
             {% block content %}
-    <form action="train" class="">
+    <form action="train" class="" onsubmit="return checkSamePlace()">
       {% csrf_token %}
       {% if same_loc %}
         <h4 class="msg text-center bg-grey text-warning">Same Location</h4>
@@ -87,7 +87,7 @@
       </div>
 
         <label for="date" class="form-group">Date</label>
-        <input type="date" id="date" class="form-control" name="date">
+        <input type="date" id="date" class="form-control" name="date" value={{cur_date|date:"Y-m-d"}} required>
         <!-- {{ form.as_p }} -->
 
         <label for="allclass" class="form-group">General</label>
@@ -100,11 +100,11 @@
 
         <label for="seat" class="form-group">Seat Type</label>
         <select name="seat" id="seat" class="form-control" >
-          <option value="1ac">1AC</option>
-          <option value="2ac">2AC</option>
-          <option value="3ac">3AC</option>
-          <option value="sleeper">SLEEPER</option>
+          {% for seat in seatType %}
+            <option value="{{seat.class_name}}">{{seat.class_name}}</option>
+          {% endfor %}
         </select>
+
 
 
         <div class="w-100 text-center">
@@ -114,13 +114,25 @@
     {% endblock %}
 </div>
 </div>
-    {% if user %}
-    <h1> {{user.username}}</h1>
-    {% endif%}
-    {% for train in trains %}
-    <h1>{{train.from_location}}</h1>
-    <h1>{{train.to_location}}</h1>
-    {% endfor %}
+<script>
+    function checkSamePlace() {
+            var place1 = document.getElementById('from').value;
+            var place2 = document.getElementById('to').value;
+            var date=document.getElementById('date').value;
+            const inputDate = new Date(date);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); 
+          if(inputDate < today){
+            alert('you Can\'t select that Date');
+            return false;
+          } 
+            if (place1 === place2) {
+                alert('The places must be the different.');
+                return false;
+            }
+            return true; 
+        }
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
