@@ -31,19 +31,16 @@ def format_date(date_value, date_format='%a, %d %b'):
 @register.filter(name='add_time_return_time')
 def add_time_return_time(cur_time,time_str):
     try:
-        print(cur_time)
         cur_time=str(cur_time)
         datetime_obj = datetime.strptime(cur_time, '%H:%M:%S')
         time_delta = datetime.strptime(str(time_str), '%H:%M:%S').time()
         result_datetime = datetime_obj + timedelta(hours=time_delta.hour, minutes=time_delta.minute, seconds=time_delta.second)
         return result_datetime.strftime('%H:%M ')
     except ValueError:
-        print(time_str)
         return ''
 
 @register.simple_tag
 def multiple_args_tag(date_value, time_value, add_time):
-    print(date_value, time_value, add_time)
     try:
         datetime_str=str(date_value)+' '+str(time_value)
         datetime_obj = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
@@ -54,16 +51,9 @@ def multiple_args_tag(date_value, time_value, add_time):
 
     except:
         return ''
-
-# @register.filter(name='add_time_return_time')
-# def add_time_return_time(datetime_str, time_str):
-#     try:
-#         print(datetime_str,time_str)
-#         datetime_obj = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
-#         time_delta = datetime.strptime(time_str, '%H:%M:%S').time()
-#         result_datetime = datetime_obj + timedelta(hours=time_delta.hour, minutes=time_delta.minute, seconds=time_delta.second)
-#         # return result_datetime.strftime('%Y-%m-%d %H:%M:%S')
-#         return result_datetime.strftime('%H:%M ')
-#     except ValueError:
-#         print(datetime_str,time_str)
-#         return ''
+@register.simple_tag
+def tot_seat(end,start):
+    try:
+        return end-start+1
+    except:
+        return ''

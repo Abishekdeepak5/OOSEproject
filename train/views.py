@@ -13,7 +13,6 @@ def train(request):
     date1=request.GET['date']
     seat_type=request.GET['seat']
     train_data['cur_date']=date1
-    print('cur_date1',seat_type)
     if from_loc==to_loc:
         place=Place.objects.all()
         dict_data={'places':place}
@@ -27,12 +26,8 @@ def train(request):
             class_data=TrainClass.objects.filter(train_id=i.train_no)
             i.class_data=class_data
             for j in class_data:
-                print(j.train_id.train_no,j.class_no.class_name)
-                print(i.train_no.train_no,date1,j.class_id)
                 train_check=Booking.objects.filter(train_id=i.train_no.train_no,date_of_journey=date1,class_no=j.class_id)
-                print(train_check)
                 j.available_seat=j.seat_end_range-j.seat_start_range+1-len(train_check)
-                print(len(train_check),j.available_seat,j.seat_end_range-j.seat_start_range+1-len(train_check))
     except Exception as e:
         print('Error',e)
     return render(request,'train.html',train_data)
@@ -56,8 +51,8 @@ def book(request):
                 bookob.user_id=user_ob
                 bookob.date_of_journey=datetime_object
                 bookob.class_no=trainclass_ob
-                # bookob.save()
-            print('Received data from frontend:', data)
+                bookob.save()
+                return JsonResponse({'user_id':bookob.user_id.id,'route_id':bookob.route_id.route_no,'book_id':bookob.pk,'seat_no':bookob.seat_no})
             return JsonResponse({'message': 'Data received successfully'})
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
@@ -65,9 +60,17 @@ def book(request):
         return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
 
 def ticket(request):
+    # var url = `ticket/?user_id=${userId}&book_id=${bookId}&seat_no=${seatNo}&route_id=${routeId}
+    ticket_data={}
     user_id = request.GET.get('user_id')
-    username = request.GET.get('username')
-    print(user_id,username)
-    if request.method == 'POST':
-        return render(request,'ticket.html')
-    return render(request,'ticket.html')
+    book_id = request.GET.get('book_id')
+    ticket_data['seat_no']=request.GET.get('seat_no')
+    routeId=request.GET.get('route_id')
+
+    userob=Userdetail.objects.get(id=user_id)
+    bookob=Booking.objects.get(book_id=book_id)
+    routeob=Route.objects.get(route_no=routeId)
+    ticket_data['userob']=Userdetail.objects.get(id=user_id)
+    ticket_data['bookob']=Booking.objects.get(book_id=book_id)
+    ticket_data['routeob']=Route.objects.get(route_no=routeId)
+    return render(request,'ticket.html',ticket_data)

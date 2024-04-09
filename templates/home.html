@@ -8,7 +8,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'style/home.css' %}">
 </head>
-<body>
+<body onload="checkLogin()">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Indian Railways</a>
@@ -18,23 +18,13 @@
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link text-black" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                <button class="nav-link text-black" onclick="register()">Register</button>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown link
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
+                <button class="nav-link text-black" onclick="logout()">Log out</button>
               </li>
             </ul>
           </div>
@@ -115,6 +105,24 @@
 </div>
 </div>
 <script>
+  function checkLogin(){
+    var user_id=localStorage.getItem('myData');
+    if(user_id){
+      console.log(user_id);
+    }
+    else{
+      var url = `login`;
+      window.location.href = url;
+    }
+  }
+  function logout(){
+    localStorage.removeItem('myData');
+    var url = `login`;
+    window.location.href = url;
+  }
+  function register(){
+    window.location.href = 'register';
+  }
     function checkSamePlace() {
             var place1 = document.getElementById('from').value;
             var place2 = document.getElementById('to').value;

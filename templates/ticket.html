@@ -11,48 +11,54 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'style/ticket.css' %}">
 </head>
-<body>
-<div  id="pdfContainer" onclick="downloadPDF()">
+<body onload="downloadPDF()">
+<div  id="pdfContainer">
     <div class="main-content">
         <div class="ticket">
             <div class="ticket__main">
-                <div class="header">Kumbakonam super Express</div>
+                <div class="header">{{routeob.train_no.train_name}}</div>
                 <div class="info passenger">
                     <div class="info__item">Passenger</div>
-                    <div class="info__detail">Hermione J. Granger</div>
+                    <div class="info__detail">{{userob.username}}</div>
                 </div>
                 <div class="info platform"> <span>Ticket </span><span>NO:</span>
                     
                     <div class="number">
-                        <div>9</div>
+                        <div>{{bookob.book_id}}</div>
                     </div>
                 </div>
                 <div class="info departure">
                     <div class="info__item">From:</div>
-                    <div class="info__detail">King's Cross</div>
+                    <div class="info__detail">{{routeob.from_location.place_name}}</div>
                 </div>
                 <div class="info arrival">
                     <div class="info__item">To:</div>
-                    <div class="info__detail">Hogsmeade</div>
+                    <div class="info__detail">{{routeob.to_location.place_name}}</div>
                 </div>
                 <div class="info date">
                     <div class="info__item">Date</div>
-                    <div class="info__detail">1 Sep 2018</div>
+                    <div class="info__detail">{{bookob.date_of_journey}}</div>
                 </div>
                 <div class="info time">
                     <div class="info__item">Time</div>
-                    <div class="info__detail">11:00AM</div>
+                    <div class="info__detail">{{routeob.arrival_time}}</div>
                 </div>
+                
                 <div class="info carriage">
-                    <div class="info__item">car</div>
-                    <div class="info__detail">4</div>
+                    <div class="info__item">Price</div>
+                    <div class="info__detail">{{bookob.class_no.price}}</div>
+                </div>
+                
+                <div class="info carriage">
+                    <div class="info__item">class</div>
+                    <div class="info__detail">{{bookob.class_no.class_no.class_name}}</div>
                 </div>
                 <div class="info seat">
                     <div class="info__item">Seat</div>
-                    <div class="info__detail">6B</div>
+                    <div class="info__detail">{{seat_no}}</div>
                 </div>
                 <div class="fineprint">
-                    <p>Boarding begins 30 minutes before departure. Snacks available for purchase from The Honeydukes Express.</p>
+                    <p>Boarding begins 30 minutes before departure. Snacks available for purchase from The {{routeob.train_no.train_name}}.</p>
                     <p>This ticket is Non-refundable • Indian Railway Authority</p>
                 </div>
         </div>

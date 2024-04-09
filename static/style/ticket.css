@@ -80,6 +80,10 @@ aside.context .explanation {
     border-color: #000;
     text-align: center;
     padding: 10px 0;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .platform span {
     display: block;
@@ -98,7 +102,7 @@ aside.context .explanation {
 }
 
 .platform .number{
-    font: 900 90px/1 'Old Standard TT';
+    font: 900 30px/1 'Old Standard TT' ;
 }
 .departure, .arrival {
     grid-column-start: span 3;
@@ -106,8 +110,14 @@ aside.context .explanation {
 .passenger, .departure, .date {
     border-left: 3px solid;
 }
-.date, .time {
+.date{
     grid-column-start: span 2;
+}
+.time {
+    grid-column-start: span 1;
+}
+.carriage{
+    grid-column-start: span 1;
 }
 .fineprint {
     grid-column-start: span 7;

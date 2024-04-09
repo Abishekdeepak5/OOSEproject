@@ -5,6 +5,9 @@ from train.models import *
 from django import forms
 from .forms import MyForm
 from datetime import datetime
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 # Create your views here.
 class TrainAvailable:
     from_loc=""
@@ -16,23 +19,6 @@ def home(request):
     dict_data={'places':place}
     dict_data['cur_date']=datetime.now()
     dict_data['seatType']=ClassType.objects.all()
-    # if request.method=='POST':
-    #     from_loc=request.POST['from']
-    #     to_loc=request.POST['to']
-    #     date1=request.POST.get('date')
-    #     input_datetime = datetime.strptime(date1, "%Y-%m-%d")
-    #     output_date_string = input_datetime.strftime("%a, %d %b %Y")
-    #     train_data={}
-    #     train_data['Date']=output_date_string
-    #     try:
-    #         train_data['Location']=Route.objects.get(from_location=from_loc,to_location=to_loc)
-    #         train_data['train_available']=Route.objects.filter(from_location=from_loc,to_location=to_loc)
-    #     except:
-    #         pass
-    #     if from_loc==to_loc:
-    #         dict_data['same_loc']=True
-    #         return render(request,'home.html',dict_data)
-    #     return render(request,'train.html',train_data)
     return render(request,'home.html',dict_data)
 def register(request):
     if request.method=='POST':
@@ -41,6 +27,7 @@ def register(request):
         ob.email=request.POST['email']
         ob.password=request.POST['password']
         ob.save()
+        return render(request,'login.html')
     data=Userdetail.objects.all()
     return render(request,'register.html',{'datas':data})
 def login(request):
@@ -53,3 +40,16 @@ def login(request):
         except:
             return render(request,'login.html',{'data':"Invalid Email or Password"})
     return render(request,'login.html')
+@csrf_exempt 
+def saveuser(request):
+    if request.method=='POST':
+        try:
+            data = json.loads(request.body)
+            email=data['email']
+            password=data['password']
+            user=Userdetail.objects.get(email=email,password=password)
+            return JsonResponse({'user_id':user.id})
+        except:
+            return JsonResponse({'error':'error'})
+        return JsonResponse({'msg':'Hello'})
+    return JsonResponse({'msg':'Hello'})
